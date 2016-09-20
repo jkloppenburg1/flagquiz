@@ -16,14 +16,15 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/questionNumberTextView" />
+        android:id="@+id/questionNumberTextView"
+        android:layout_gravity="center_horizontal" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/flagImageView"
-        android:src="@drawable/usflag"
         android:adjustViewBounds="true"
+        android:layout_gravity="center"
         android:scaleType="center" />
 
     <TextView
@@ -31,13 +32,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/guessCountryTextView" />
+        android:id="@+id/guessCountryTextView"
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/row1LinearLayout">
+        android:layout_height="wrap_content"
+        android:id="@+id/row1LinearLayout"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -55,8 +59,9 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/row2LinearLayout">
+        android:layout_height="wrap_content"
+        android:id="@+id/row2LinearLayout"
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -74,8 +79,9 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/row3LinearLayout">
+        android:layout_height="wrap_content"
+        android:id="@+id/row3LinearLayout"
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -93,8 +99,9 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/row4LinearLayout">
+        android:layout_height="wrap_content"
+        android:id="@+id/row4LinearLayout"
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -114,5 +121,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/answerTextView" />
+        android:id="@+id/answerTextView"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
