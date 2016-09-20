@@ -22,7 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/flagImageView"
-        android:src="@drawable/usflag" />
+        android:src="@drawable/usflag"
+        android:adjustViewBounds="true"
+        android:scaleType="center" />
 
     <TextView
         android:layout_width="wrap_content"
