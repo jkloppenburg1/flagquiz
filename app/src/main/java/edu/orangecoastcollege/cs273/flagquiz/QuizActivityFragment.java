@@ -1,8 +1,11 @@
 package edu.orangecoastcollege.cs273.flagquiz;
 
+import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +90,80 @@ public class QuizActivityFragment extends Fragment {
         return view;
     }
 
-    public QuizActivityFragment() {
+    public void updateGuessRows(SharedPreferences sharedPreferences)
+    {
+        // get the number of guess buttons to diplay
+        String choices =
+                sharedPreferences.getString(QuizActivity.CHOICES, null);
+        guessRows = Integer.parseInt(choices) / 2;
+
+        // hide all guess button LinearLayouts
+        for (LinearLayout layout : guessLinearLayouts)
+            layout.setVisibility(View.GONE);
+
+        for (int row = 0; row < guessRows; row++)
+        {
+            guessLinearLayouts[row].setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void updateRegions(SharedPreferences sharedPreferences) {
+        regionsSet =
+                sharedPreferences.getStringSet(QuizActivity.REGIONS, null);
+    }
+
+    public void resetQuiz()
+    {
+        // use AssetManager to get image file names for enabled regions
+        AssetManager assets = getActivity().getAssets();
+        fileNameList.clear(); // empty list of image file names
+
+        try
+        {
+            //loop through each region
+            for (String region : regionsSet)
+            {
+                //get a list of all flags image files in this region
+                String[] paths = assets.list(region);
+
+                for (String path : paths)
+                    fileNameList.add(path.replace(".png", ""));
+            }
+        }
+        catch (IOException exception)
+        {
+            Log.e(TAG, "Error loading image file names", exception);
+        }
+
+        correctAnswers = 0; //reset values
+        totalGuesses = 0;
+        quizCountriesList.clear();
+
+        int flagCounter = 1;
+        int numberOfFlags = fileNameList.size();
+
+        // add FLAGS_IN_QUIZ random file names to quizCountriesList
+        while (flagCounter <= FLAGS_IN_QUIZ)
+        {
+            int randomIndex = random.nextInt(numberOfFlags);
+
+            // get the random file name
+            String filename = fileNameList.get(randomIndex);
+
+            // if the region is enabled and it hasn't already been chosen
+            if (!quizCountriesList.contains(filename))
+            {
+                quizCountriesList.add(filename);
+                flagCounter++;
+            }
+        }
+
+        loadNextFlag(); //start the quiz by loading the first flag
+    }
+
+    //Add loadNextFlag
+    private void loadNextFlag()
+    {
+
     }
 }
