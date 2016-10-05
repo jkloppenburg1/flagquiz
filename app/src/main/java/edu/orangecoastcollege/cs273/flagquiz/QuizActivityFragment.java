@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,12 +41,51 @@ public class QuizActivityFragment extends Fragment {
     private LinearLayout[] guessLinearLayouts; //rows of answer buttons
     private TextView answerTextView; //shows correct answer
 
-    public QuizActivityFragment() {
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_quiz, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view =
+                inflater.inflate(R.layout.fragment_quiz, container, false);
+
+        fileNameList = new ArrayList<>();
+        quizCountriesList = new ArrayList<>();
+        random = new SecureRandom();
+        handler = new Handler();
+
+        // get references to GUI
+        questionNumberTextView = (TextView) view.findViewById(R.id.questionNumberTextView);
+        flagImageView = (ImageView) view.findViewById(R.id.flagImageView);
+        guessLinearLayouts = new LinearLayout[4];
+        guessLinearLayouts[0] =
+                (LinearLayout) view.findViewById(R.id.row1LinearLayout);
+        guessLinearLayouts[1] =
+                (LinearLayout) view.findViewById(R.id.row2LinearLayout);
+        guessLinearLayouts[2] =
+                (LinearLayout) view.findViewById(R.id.row3LinearLayout);
+        guessLinearLayouts[3] =
+                (LinearLayout) view.findViewById(R.id.row4LinearLayout);
+        answerTextView = (TextView) view.findViewById(R.id.answerTextView);
+
+        // configure listeners for the guess buttons
+        for (LinearLayout row : guessLinearLayouts)
+        {
+            for (int column = 0; column < row.getChildCount(); column++)
+            {
+                Button button = (Button) row.getChildAt(column);
+                button.setOnClickListener(guessButtonListener);
+            }
+        }
+
+        //set questionNumberTextView's text
+        questionNumberTextView.setText(
+                getString(R.string.question, 1, FLAGS_IN_QUIZ));
+
+        return view;
+    }
+
+    public QuizActivityFragment() {
     }
 }
