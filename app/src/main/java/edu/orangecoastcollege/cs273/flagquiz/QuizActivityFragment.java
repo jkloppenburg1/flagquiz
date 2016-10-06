@@ -168,9 +168,7 @@ public class QuizActivityFragment extends Fragment {
         loadNextFlag(); //start the quiz by loading the first flag
     }
 
-    //Add loadNextFlag
-    private void loadNextFlag()
-    {
+    private void loadNextFlag() {
         // get file name of the next flag and remove it from the list
         String nextImage = quizCountriesList.remove(0);
         correctAnswer = nextImage; // update the correct answer
@@ -189,14 +187,11 @@ public class QuizActivityFragment extends Fragment {
         //get an InputStream to the asset representing the next flag
         // and try to use the InputStream
         try (InputStream stream =
-                assets.open(region + "/" + nextImage + ".png"))
-        {
+                     assets.open(region + "/" + nextImage + ".png")) {
             //load the asset as a drawable and diplay on the flagImageView
             Drawable flag = Drawable.createFromStream(stream, nextImage);
             flagImageView.setImageDrawable(flag);
-        }
-        catch (IOException exception)
-        {
+        } catch (IOException exception) {
             Log.e(TAG, "Error loading " + nextImage, exception);
         }
 
@@ -207,12 +202,10 @@ public class QuizActivityFragment extends Fragment {
         fileNameList.add(fileNameList.remove(correct));
 
         // add 2, 3, 6, or 8 buttons based on the value of guessRows
-        for (int row = 0; row < guessRows; row++)
-        {
+        for (int row = 0; row < guessRows; row++) {
             for (int column = 0;
-                    column < guessLinearLayouts[row].getChildAt(column);
-                    column++)
-            {
+                 column < guessLinearLayouts[row].getChildCount();
+                 column++) {
                 // get reference to Button to configure
                 Button newGuessButton =
                         (Button) guessLinearLayouts[row].getChildAt(column);
@@ -230,7 +223,7 @@ public class QuizActivityFragment extends Fragment {
         LinearLayout randomRow = guessLinearLayouts[row]; // get row
         String countryName = getCountryName(correctAnswer);
         ((Button) randomRow.getChildAt(column)).setText(countryName);
-
+    }
         private View.OnClickListener guessButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,10 +257,10 @@ public class QuizActivityFragment extends Fragment {
                             {
                                 AlertDialog.Builder builder =
                                         new AlertDialog.Builder(getActivity());
-                                buildersetMessage(
+                                builder.setMessage(
                                         getString(R.string.results,
                                                 totalGuesses,
-                                                1000 / (double) totalGuesses)));
+                                                1000 / (double) totalGuesses));
 
                                 // "Reset Quiz Button
                                 builder.setPositiveButton(R.string.reset_quiz,
@@ -282,12 +275,48 @@ public class QuizActivityFragment extends Fragment {
 
                                 return builder.create(); // return the AlertDialog
                             }
-                        }
+                        };
+
+                        // use the FragmentManager to display the DialogFragment
+                        quizResults.setCancelable(false);
+                        quizResults.show(getFragmentManager(), "quiz results");
                     }
-                    )
+                    else // answer correct but quiz is not over
+                    {
+                        //load next flag after 2 second delay
+                        handler.postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        loadNextFlag();
+                                    }
+                                }, 2000);
+                    }
+                    }
+                    else //answer incorrect
+                {
+                    //display "Incorrect!" in red
+                    answerTextView.setText(R.string.incorrect_answer);
+                    answerTextView.setTextColor(getResources().getColor(
+                            R.color.incorrect_answer, getContext().getTheme()));
+                    guessButton.setEnabled(false); // disable incorrect answer
                 }
             }
+        };
+
+        private String getCountryName(String name)
+    {
+        String countryName = name.substring(name.indexOf('-') + 1);
+        return countryName.replace('_', ' ');
+    }
+
+    private void disableButtons()
+    {
+        for (int row = 0; row<guessRows; row++)
+        {
+            LinearLayout guessRow = guessLinearLayouts[row];
+            for (int i = 0; i < guessRow.getChildCount(); i++)
+                guessRow.getChildAt(i).setEnabled(false);
         }
-        ))
     }
 }
