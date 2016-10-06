@@ -1,5 +1,9 @@
 package edu.orangecoastcollege.cs273.flagquiz;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
@@ -226,6 +230,64 @@ public class QuizActivityFragment extends Fragment {
         LinearLayout randomRow = guessLinearLayouts[row]; // get row
         String countryName = getCountryName(correctAnswer);
         ((Button) randomRow.getChildAt(column)).setText(countryName);
+
+        private View.OnClickListener guessButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button guessButton = ((Button) v);
+                String guess = guessButton.getText().toString();
+                String answer = getCountryName(correctAnswer);
+                ++totalGuesses; // increment number of guesses user has made
+
+                if (guess.equals(answer)) //if correct guess
+                {
+                    correctAnswers++;
+
+                    //display correect answer in green text
+                    answerTextView.setText(answer + "!");
+                    answerTextView.setTextColor(
+                            getResources().getColor(R.color.correct_answer,
+                            getContext().getTheme()));
+
+                    disableButtons(); // disable all guess Buttons
+
+                    // if user correctly identified FLAGS_IN_QUIZ flags
+                    if (correctAnswers == FLAGS_IN_QUIZ)
+                    {
+                        //Display quiz stats and start new quiz
+                        DialogFragment quizResults =
+                                new DialogFragment()
+                        {
+                            //create an AlertDialog and return it
+                            @Override
+                            public Dialog onCreateDialog(Bundle bundle)
+                            {
+                                AlertDialog.Builder builder =
+                                        new AlertDialog.Builder(getActivity());
+                                buildersetMessage(
+                                        getString(R.string.results,
+                                                totalGuesses,
+                                                1000 / (double) totalGuesses)));
+
+                                // "Reset Quiz Button
+                                builder.setPositiveButton(R.string.reset_quiz,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int id)
+                                            {
+                                                resetQuiz();
+                                            }
+                                        }
+                                );
+
+                                return builder.create(); // return the AlertDialog
+                            }
+                        }
+                    }
+                    )
+                }
+            }
+        }
         ))
     }
 }
