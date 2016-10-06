@@ -2,6 +2,7 @@ package edu.orangecoastcollege.cs273.flagquiz;
 
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -164,6 +167,65 @@ public class QuizActivityFragment extends Fragment {
     //Add loadNextFlag
     private void loadNextFlag()
     {
-//
+        // get file name of the next flag and remove it from the list
+        String nextImage = quizCountriesList.remove(0);
+        correctAnswer = nextImage; // update the correct answer
+        answerTextView.setText("");
+
+        //display current question number
+        questionNumberTextView.setText(getString(
+                R.string.question, (correctAnswers + 1), FLAGS_IN_QUIZ));
+
+        // extract the region from the next image's name
+        String region = nextImage.substring(0, nextImage.indexOf('-'));
+
+        // use AssetManager to load next image
+        AssetManager assets = getActivity().getAssets();
+
+        //get an InputStream to the asset representing the next flag
+        // and try to use the InputStream
+        try (InputStream stream =
+                assets.open(region + "/" + nextImage + ".png"))
+        {
+            //load the asset as a drawable and diplay on the flagImageView
+            Drawable flag = Drawable.createFromStream(stream, nextImage);
+            flagImageView.setImageDrawable(flag);
+        }
+        catch (IOException exception)
+        {
+            Log.e(TAG, "Error loading " + nextImage, exception);
+        }
+
+        Collections.shuffle(fileNameList); // shuffle file names
+
+        // put the correct answer at the end of fileNameList
+        int correct = fileNameList.indexOf(correctAnswer);
+        fileNameList.add(fileNameList.remove(correct));
+
+        // add 2, 3, 6, or 8 buttons based on the value of guessRows
+        for (int row = 0; row < guessRows; row++)
+        {
+            for (int column = 0;
+                    column < guessLinearLayouts[row].getChildAt(column);
+                    column++)
+            {
+                // get reference to Button to configure
+                Button newGuessButton =
+                        (Button) guessLinearLayouts[row].getChildAt(column);
+                newGuessButton.setEnabled(true);
+
+                // get country name and set newGuessButton's text
+                String filename = fileNameList.get((row * 2) + column);
+                newGuessButton.setText(getCountryName(filename));
+            }
+        }
+
+        // randomly replace on Button with the correct answer
+        int row = random.nextInt(guessRows); // pick random row
+        int column = random.nextInt(2); // pick random column
+        LinearLayout randomRow = guessLinearLayouts[row]; // get row
+        String countryName = getCountryName(correctAnswer);
+        ((Button) randomRow.getChildAt(column)).setText(countryName);
+        ))
     }
 }
