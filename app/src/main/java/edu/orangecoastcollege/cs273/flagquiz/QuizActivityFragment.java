@@ -247,7 +247,7 @@ public class QuizActivityFragment extends Fragment {
                     // if user correctly identified FLAGS_IN_QUIZ flags
                     if (correctAnswers == FLAGS_IN_QUIZ)
                     {
-                        //Display quiz stats and start new quiz
+                        //Display quiz stats and start a new quiz
                         DialogFragment quizResults =
                                 new DialogFragment()
                         {
