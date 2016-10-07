@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,18 +21,20 @@
         android:layout_gravity="center_horizontal" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:id="@+id/flagImageView"
         android:adjustViewBounds="true"
         android:layout_gravity="center"
-        android:scaleType="center" />
+        android:scaleType="center"
+        app:srcCompat="@drawable/usflag"
+        android:layout_weight="2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="@string/guess_country"
         android:id="@+id/guessCountryTextView"
         android:layout_gravity="center_horizontal" />
 
@@ -48,14 +51,16 @@
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="right" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button2"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="left" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,14 +75,16 @@
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button3"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="right" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button4"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="left" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,14 +99,16 @@
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button5"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="right" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button6"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="left" />
     </LinearLayout>
 
     <LinearLayout
@@ -114,14 +123,16 @@
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button7"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="right" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button8"
-            style="@android:style/Widget.Material.Button.Colored" />
+            style="@android:style/Widget.Material.Button.Colored"
+            android:layout_gravity="left" />
     </LinearLayout>
 
     <TextView

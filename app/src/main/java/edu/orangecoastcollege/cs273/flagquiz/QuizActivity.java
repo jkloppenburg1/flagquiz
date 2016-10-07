@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import java.util.Set;
 
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.Toolbar;
+
 public class QuizActivity extends AppCompatActivity {
 
     // keys for reading data from Shared Preferences
@@ -111,8 +114,8 @@ public class QuizActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private OnSharedPreferenceChangeListener preferencesChangeListener =
-            new OnSharedPreferenceChangeListener() {
+    private SharedPreferences.OnSharedPreferenceChangeListener preferencesChangeListener =
+            new SharedPreferences.OnSharedPreferenceChangeListener() {
                 // called when preferences are changed
 
                 @Override
@@ -122,6 +125,7 @@ public class QuizActivity extends AppCompatActivity {
                     QuizActivityFragment quizFragment = (QuizActivityFragment)
                             getSupportFragmentManager().findFragmentById(
                                     R.id.quizFragment);
+
                     if (key.equals(CHOICES)) { //# of choices to display changed
                         quizFragment.updateGuessRows(sharedPreferences);
                         quizFragment.resetQuiz();

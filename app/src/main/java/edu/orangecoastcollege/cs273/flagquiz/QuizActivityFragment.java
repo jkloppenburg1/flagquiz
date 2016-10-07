@@ -3,13 +3,13 @@ package edu.orangecoastcollege.cs273.flagquiz;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+//import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import android.support.v4.app.Fragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -279,7 +281,7 @@ public class QuizActivityFragment extends Fragment {
 
                         // use the FragmentManager to display the DialogFragment
                         quizResults.setCancelable(false);
-                        quizResults.show(getFragmentManager(), "quiz results");
+                        quizResults.show(getActivity().getFragmentManager(), "quiz results");
                     }
                     else // answer correct but quiz is not over
                     {
